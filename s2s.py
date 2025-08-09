@@ -18,11 +18,11 @@ def audio_transcription(audio_file):
     
     return transcription
 
-def text_translation(text): # 'text' is now a parameter
+def text_translation(text):
     translator_es = Translator(from_lang="en", to_lang="es")
-    es_text = translator_es.translate(text) # Consistent variable name
+    es_text = translator_es.translate(text)
     translator_ja = Translator(from_lang="en", to_lang="ja")
-    ja_text = translator_ja.translate(text) # Consistent variable name
+    ja_text = translator_ja.translate(text)
     
     return es_text, ja_text
     
@@ -43,7 +43,7 @@ def text_to_speech(text):
             stability=0.5,
             similarity_boost=0.8,
             style=0.5,
-            use_speaker_boost=True, # Corrected boolean value
+            use_speaker_boost=True,
         ),
     )
 
@@ -59,7 +59,6 @@ def text_to_speech(text):
     return save_file_path
 
 def voice_to_voice(audio_file):
-    # Transcribe audio
     transcription_response = audio_transcription(audio_file)
     
     if transcription_response.status == aai.TranscriptStatus.error:
@@ -67,10 +66,8 @@ def voice_to_voice(audio_file):
     else:
         text = transcription_response.text
 
-    # Translate text
-    es_translation, ja_translation = text_translation(text) # Pass 'text'
+    es_translation, ja_translation = text_translation(text)
 
-    # Convert translated text to speech
     es_audio_path = text_to_speech(es_translation)
     ja_audio_path = text_to_speech(ja_translation)
 
